@@ -155,7 +155,7 @@ router.post(
     [
         body('subject').trim().notEmpty().withMessage('Subject required'),
         body('request_type').isIn(['Corrective', 'Preventive']).withMessage('Invalid request type'),
-        body('equipment_id').isUUID().withMessage('Valid equipment ID required'),
+        body('equipment_id').isUUID('all').withMessage('Valid equipment ID required'),
         validate,
     ],
     createRequest

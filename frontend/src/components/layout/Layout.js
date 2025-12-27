@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useAuthStore from '../../store/authStore';
 import Header from './Header';
+import Sidebar from './Sidebar';
 
 export default function Layout({ children, requireAuth = true }) {
     const router = useRouter();
@@ -25,11 +26,16 @@ export default function Layout({ children, requireAuth = true }) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {requireAuth && <Header />}
-            <main className={requireAuth ? 'py-8' : ''}>
-                {children}
-            </main>
+        <div className="flex h-screen bg-gray-50">
+            {requireAuth && <Sidebar />}
+            <div className="flex-1 flex flex-col overflow-hidden" style={{ marginLeft: requireAuth ? '256px' : '0' }}>
+                {requireAuth && <Header />}
+                <main className="flex-1 overflow-y-auto">
+                    <div className="container mx-auto px-6 py-8">
+                        {children}
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }
