@@ -17,6 +17,8 @@ const getAllEquipment = async (req, res, next) => {
             limit = 20,
         } = req.query;
 
+        console.log('🔍 GET /api/equipment query params:', req.query);
+
         const offset = (page - 1) * limit;
         const conditions = ['e.deleted_at IS NULL'];
         const values = [];
