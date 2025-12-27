@@ -16,10 +16,21 @@ const app = express();
 // MIDDLEWARE
 // ============================================================================
 
-// CORS configuration
+// CORS configuration - support multiple origins for production
+const corsOrigins = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+    : ['http://localhost:3000'];
+
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+        origin: (origin, callback) => {
+            // Allow requests with no origin (mobile apps, curl, etc.)
+            if (!origin) return callback(null, true);
+            if (corsOrigins.includes(origin) || corsOrigins.includes('*')) {
+                return callback(null, true);
+            }
+            return callback(new Error('Not allowed by CORS'));
+        },
         credentials: true,
     })
 );

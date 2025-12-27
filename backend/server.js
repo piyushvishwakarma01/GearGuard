@@ -27,15 +27,16 @@ const startServer = async () => {
         initCronJobs();
 
         // Start HTTP server
+        const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
         app.listen(PORT, () => {
             console.log('');
             console.log('═══════════════════════════════════════════════════════');
             console.log('   🛠️  GEARGUARD - Maintenance Management System');
             console.log('═══════════════════════════════════════════════════════');
             console.log(`   🚀 Server running on port ${PORT}`);
-            console.log(`   🌐 API URL: http://localhost:${PORT}`);
-            console.log(`   📚 API Docs: http://localhost:${PORT}/api-docs`);
-            console.log(`   🏥 Health Check: http://localhost:${PORT}/health`);
+            console.log(`   🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+            console.log(`   📚 API Docs: /api-docs`);
+            console.log(`   🏥 Health Check: /health`);
             console.log('═══════════════════════════════════════════════════════');
             console.log('');
         });

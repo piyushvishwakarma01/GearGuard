@@ -1,0 +1,53 @@
+# Render.com Blueprint for GearGuard
+# Deploy with: Connect GitHub repo to Render and it auto-detects this file
+
+databases:
+  - name: gearguard-db
+    plan: free
+    databaseName: gearguard_db
+    user: gearguard
+
+services:
+  # Backend API Service
+  - type: web
+    name: gearguard-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gearguard-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_EXPIRY
+        value: 15m
+      - key: JWT_REFRESH_EXPIRY
+        value: 7d
+      - key: CORS_ORIGIN
+        value: https://gearguard-frontend.onrender.com
+      - key: ENABLE_CRON_JOBS
+        value: "true"
+
+  # Frontend Next.js Service
+  - type: web
+    name: gearguard-frontend
+    runtime: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: https://gearguard-backend.onrender.com
+

@@ -51,15 +51,26 @@ export default function Header() {
                             Equipment
                         </Link>
                         {user?.role !== ROLES.USER && (
-                            <Link
-                                href="/requests/kanban"
-                                className={`text-sm font-medium transition-colors ${router.pathname.startsWith('/requests')
-                                        ? 'text-primary-600'
-                                        : 'text-gray-600 hover:text-gray-900'
-                                    }`}
-                            >
-                                Requests
-                            </Link>
+                            <>
+                                <Link
+                                    href="/requests/kanban"
+                                    className={`text-sm font-medium transition-colors ${router.pathname === '/requests/kanban'
+                                            ? 'text-primary-600'
+                                            : 'text-gray-600 hover:text-gray-900'
+                                        }`}
+                                >
+                                    Kanban
+                                </Link>
+                                <Link
+                                    href="/requests/calendar"
+                                    className={`text-sm font-medium transition-colors ${router.pathname === '/requests/calendar'
+                                            ? 'text-primary-600'
+                                            : 'text-gray-600 hover:text-gray-900'
+                                        }`}
+                                >
+                                    Calendar
+                                </Link>
+                            </>
                         )}
                         {user?.role === ROLES.MANAGER && (
                             <Link

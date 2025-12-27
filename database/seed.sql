@@ -1,11 +1,13 @@
 -- GearGuard Seed Data
+-- Password for all users: 'password123'
+-- Generated using: require('bcryptjs').hashSync('password123', 10)
 
 INSERT INTO users (id, email, password_hash, full_name, role, phone, is_active) VALUES
-('d7a3e4f0-1234-4567-89ab-111111111111', 'manager@gearguard.com', '$2a$10$rKvB5K3ZGY3QJ5X5J9J9JeXC3J9J9J9J9J9J9J9J9J9J9J9J9J9J', 'John Manager', 'Manager', '+1-555-0001', true),
-('d7a3e4f0-1234-4567-89ab-222222222222', 'tech1@gearguard.com', '$2a$10$rKvB5K3ZGY3QJ5X5J9J9JeXC3J9J9J9J9J9J9J9J9J9J9J9J9J9J', 'Alice Technician', 'Technician', '+1-555-0002', true),
-('d7a3e4f0-1234-4567-89ab-333333333333', 'tech2@gearguard.com', '$2a$10$rKvB5K3ZGY3QJ5X5J9J9JeXC3J9J9J9J9J9J9J9J9J9J9J9J9J9J', 'Bob Technician', 'Technician', '+1-555-0003', true),
-('d7a3e4f0-1234-4567-89ab-444444444444', 'tech3@gearguard.com', '$2a$10$rKvB5K3ZGY3QJ5X5J9J9JeXC3J9J9J9J9J9J9J9J9J9J9J9J9J9J', 'Charlie Technician', 'Technician', '+1-555-0004', true),
-('d7a3e4f0-1234-4567-89ab-555555555555', 'user1@gearguard.com', '$2a$10$rKvB5K3ZGY3QJ5X5J9J9JeXC3J9J9J9J9J9J9J9J9J9J9J9J9J9J', 'Diana User', 'User', '+1-555-0005', true);
+('d7a3e4f0-1234-4567-89ab-111111111111', 'manager@gearguard.com', '$2a$10$QPUY2A2wLOLDA66HWU.uw.bGypJgev6PqDm1dMdDCIEHekyqTOQOu', 'John Manager', 'Manager', '+1-555-0001', true),
+('d7a3e4f0-1234-4567-89ab-222222222222', 'tech1@gearguard.com', '$2a$10$QPUY2A2wLOLDA66HWU.uw.bGypJgev6PqDm1dMdDCIEHekyqTOQOu', 'Alice Technician', 'Technician', '+1-555-0002', true),
+('d7a3e4f0-1234-4567-89ab-333333333333', 'tech2@gearguard.com', '$2a$10$QPUY2A2wLOLDA66HWU.uw.bGypJgev6PqDm1dMdDCIEHekyqTOQOu', 'Bob Technician', 'Technician', '+1-555-0003', true),
+('d7a3e4f0-1234-4567-89ab-444444444444', 'tech3@gearguard.com', '$2a$10$QPUY2A2wLOLDA66HWU.uw.bGypJgev6PqDm1dMdDCIEHekyqTOQOu', 'Charlie Technician', 'Technician', '+1-555-0004', true),
+('d7a3e4f0-1234-4567-89ab-555555555555', 'user1@gearguard.com', '$2a$10$QPUY2A2wLOLDA66HWU.uw.bGypJgev6PqDm1dMdDCIEHekyqTOQOu', 'Diana User', 'User', '+1-555-0005', true);
 
 INSERT INTO departments (id, name, description, manager_id) VALUES
 ('a1a1a1a1-1111-1111-1111-111111111111', 'IT Department', 'Information Technology', 'd7a3e4f0-1234-4567-89ab-111111111111'),
