@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("USER")
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  teams              Team[]               @relation("TeamMembers")
+  assignedEquipment  Equipment[]          @relation("TechnicianEquipment")
+  assignedRequests   MaintenanceRequest[] @relation("TechnicianRequests")
+  createdRequests    MaintenanceRequest[] @relation("CreatorRequests")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  equipment Equipment[]
+  requests  MaintenanceRequest[]
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members   User[]               @relation("TeamMembers")
+  equipment Equipment[]
+  requests  MaintenanceRequest[]
+}
+
+model Equipment {
+  id             Int       @id @default(autoincrement())
+  name           String
+  serialNumber   String?
+  categoryId     Int
+  department     String?
+  employeeName   String?
+  teamId         Int
+  technicianId   Int?
+  purchaseDate   DateTime?
+  warrantyExpiry DateTime?
+  location       String?
+  active         Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  category   Category             @relation(fields: [categoryId], references: [id])
+  team       Team                 @relation(fields: [teamId], references: [id])
+  technician User?                @relation("TechnicianEquipment", fields: [technicianId], references: [id])
+  requests   MaintenanceRequest[]
+}
+
+model Stage {
+  id       Int     @id @default(autoincrement())
+  name     String
+  code     String  @unique
+  sequence Int     @default(10)
+  fold     Boolean @default(false)
+
+  requests MaintenanceRequest[]
+}
+
+model MaintenanceRequest {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String?
+  requestType   String
+  equipmentId   Int
+  categoryId    Int?
+  teamId        Int?
+  technicianId  Int?
+  stageId       Int
+  scheduledDate DateTime?
+  duration      Float?
+  priority      String   @default("NORMAL")
+  createdById   Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  equipment  Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  category   Category? @relation(fields: [categoryId], references: [id])
+  team       Team?     @relation(fields: [teamId], references: [id])
+  technician User?     @relation("TechnicianRequests", fields: [technicianId], references: [id])
+  stage      Stage     @relation(fields: [stageId], references: [id])
+  createdBy  User      @relation("CreatorRequests", fields: [createdById], references: [id])
+}
